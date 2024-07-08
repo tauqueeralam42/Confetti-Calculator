@@ -1,3 +1,5 @@
+/* Calculator.css */
+
 @import url(https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic);
 
 * {
@@ -16,11 +18,49 @@ button {
 }
 
 body {
-  background-color: #0f0f0f;
-  color: white;
-  background-image: linear-gradient(#161616 1px, transparent 1px),
-    linear-gradient(to right, #161616 1px, #0f0f0f 1px);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  background-image: linear-gradient(var(--grid-line-color) 1px, transparent 1px),
+    linear-gradient(to right, var(--grid-line-color) 1px, var(--bg-color) 1px);
   background-size: 20px 20px;
+}
+
+:root {
+  --bg-color: #0f0f0f;
+  --text-color: white;
+  --grid-line-color: #161616;
+  --display-bg-color: #414141;
+  --button-bg-color: #555555;
+  --button-hover-bg-color: rgba(255, 255, 255, 0.2);
+  --border-color: rgba(255, 255, 255, 0.3);
+  --operator-bg-color: #F0A03B;
+  --number-bg-color: #73736E;
+}
+
+.night-theme {
+  --bg-color: #ffffffef;
+  --text-color:rgb(0, 0, 0) ;
+  --grid-line-color: #e0e0e0;
+  --display-bg-color: #f0f0f0ca;
+  --button-bg-color: #e0e0e0;
+  --button-hover-bg-color: #9a9a9a;
+  --border-color: #ccc;
+  --operator-bg-color: #ffcc00f7;
+  --number-bg-color: #cccccce4;
+  --exp-text : rgba(0, 0, 0, 0.533);
+}
+
+.day-theme {
+  --bg-color: #0f0f0f;
+  --text-color: white;
+  --grid-line-color: #161616;
+  --display-bg-color: #414141;
+  --button-bg-color: #555555;
+  --button-hover-bg-color: rgba(255, 255, 255, 0.16);
+  --border-color: rgba(255, 255, 255, 0.3);
+  --operator-bg-color: #F0A03B;
+  --number-bg-color: #73736E;
+  --exp-text : rgba(255, 255, 255, 0.435);
 }
 
 .App {
@@ -32,13 +72,8 @@ body {
   gap: 1rem;
 }
 
-.developer span {
-  font-weight: 600;
-  color: #00ff62;
-}
-
 .calculator {
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--border-color);
   border-radius: 10px;
   max-width: 800px;
   width: 100%;
@@ -46,7 +81,7 @@ body {
 }
 
 .displayWindow {
-  background-color: #414141;
+  background-color: var(--display-bg-color);
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
@@ -59,7 +94,7 @@ body {
   overflow-x: auto;
   width: 100%;
   text-align: right;
-  color: rgba(255, 255, 255, 0.3);
+  color: var(--exp-text);
   font-weight: 600;
   scrollbar-width: none;
 }
@@ -67,46 +102,72 @@ body {
 .displayWindow .result {
   font-size: 2.2rem;
   font-weight: 600;
+  color: var(--text-color);
 }
 
 .keysWindow {
   background-color: rgb(29, 29, 29);
   display: flex;
-  color: white;
+  color: var(--text-color);
 }
 
 .keysWindow button {
   padding: 0.8rem 1rem;
   font-size: 1rem;
   cursor: pointer;
-  background-color: #555555;
+  background-color: var(--button-bg-color);
   border: 1px solid black;
 }
 
 .keysWindow button:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: var(--button-hover-bg-color);
 }
-
-
 
 .keys_basic {
   flex: 1;
   display: grid;
   grid-template-columns: repeat(10, 1fr);
-  
 }
-.keys_basic .zero{
+
+.keys_basic .zero {
   grid-column: span 2;
 }
 
 .keys_basic .yellow {
-  background-color: #F0A03B;
-  
+  background-color: var(--operator-bg-color);
 }
 
 .keys_basic .number {
-  background-color: #73736E;
+  background-color: var(--number-bg-color);
   font-weight: 600;
+}
+
+.mac-dots {
+  position: relative;
+  display: flex;
+  gap: 8px;
+  background-color: var(--display-bg-color);
+}
+
+.mac-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-top: 5px;
+  
+}
+
+.mac-dot.red {
+  margin-left: 5px;
+  background-color: #ff5f57;
+}
+
+.mac-dot.orange {
+  background-color: #ffbd2e;
+}
+
+.mac-dot.green {
+  background-color: #28c840;
 }
 
 @media (max-width: 610px) {
