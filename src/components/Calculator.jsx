@@ -6,6 +6,7 @@ const Calculator = () => {
   const [expression, setExpression] = useState("");
   const [displayEXP, setDisplayEXP] = useState("");
   const [result, setResult] = useState("0");
+  const [memory, setMemory] = useState(0);
 
   const sciFunc = {
     sin: "Math.sin",
@@ -71,6 +72,19 @@ const Calculator = () => {
         setExpression(expression.replace(lastNum, factorial(num)));
       }
     } 
+    else if (value === 'mc') {
+        handleMemoryClear();
+      } else if (value === 'mr') {
+        handleMemoryRecall();
+      } else if (value === 'm+') {
+        setExpression(expression + "+");
+        setDisplayEXP(displayEXP + "+");
+        handleMemoryAdd();
+      } else if (value === 'm-') {
+        setExpression(expression + "-");
+        setDisplayEXP(displayEXP + "-");
+        handleMemorySubtract();
+      }
     else if (value === "=") calcResult();
     else if(value === "x"){
       setExpression(expression + "*");
@@ -85,6 +99,55 @@ const Calculator = () => {
       setDisplayEXP(displayEXP + value);
     }
   }
+
+  const handleMemoryClear = () => {
+    setMemory(0);
+    handleClear();
+  };
+
+  const handleMemoryRecall = () => {
+    setExpression(memory.toString());
+    let compute = eval(expression);
+          compute = parseFloat(compute.toFixed(4));
+          
+          setResult(compute);
+  };
+
+  const handleMemoryAdd = () => {
+    if (expression.length !== 0) {
+        try {
+          let compute = eval(expression);
+          compute = parseFloat(compute.toFixed(4));
+          setMemory(memory + compute);
+          setResult(compute);
+        } catch (error) {
+          setResult("An Error Occurred!");
+        }
+      } else {
+        setResult("An Error Occurred!");
+      }
+  };
+
+
+  const handleMemorySubtract = () => {
+    if (expression.length !== 0) {
+        try {
+          let compute = eval(expression);
+          compute = parseFloat(compute.toFixed(4));
+          setMemory(memory - compute);
+          setResult(compute);
+        } catch (error) {
+          setResult("An Error Occurred!");
+        }
+      } else {
+        setResult("An Error Occurred!");
+      }
+  };
+
+  const handleClear = () => {
+    setExpression("");
+    setDisplayEXP("");
+  };
 
   function factorial(n) {
     let result = 1;
