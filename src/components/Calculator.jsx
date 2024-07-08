@@ -9,20 +9,26 @@ const Calculator = () => {
   const [memory, setMemory] = useState(0);
 
   const sciFunc = {
-    sin: "Math.sin",
-    cos: "Math.cos",
-    tan: "Math.tan",
-    ln: "Math.log",
-    log: "Math.log10",
-    π: "Math.PI",
-    e: "Math.E",
+    "sin": "Math.sin",
+    "cos": "Math.cos",
+    "tan": "Math.tan",
+    "ln": "Math.log",
+    "log₁₀": "Math.log10",
+    "xʸ" : "**",
+    "π": "Math.PI",
+    "e": "Math.E",
     "x²": "square",
     "x³": "cube",
-    "xʸ": "Math.pow",
     "eˣ": "Math.exp",
     "10ˣ": "tenExp",
     "x!": "factorial",
+    "1/x": "reciprocal",
+    "²√x": "squareRoot",
+    "³√x": "cubeRoot",
+    "ʸ√x": "root",
+    "EE": "EE",
   };
+
 
   const square = (num) => {
     return num * num;
@@ -42,6 +48,21 @@ const Calculator = () => {
       result *= i;
     }
     return result;
+  };
+  const reciprocal = (num) => {
+    return 1 / num;
+  };
+
+  const squareRoot = (num) => {
+    return Math.sqrt(num);
+  };
+
+  const cubeRoot = (num) => {
+    return Math.cbrt(num);
+  };
+
+  const root = (base, exponent) => {
+    return Math.pow(base, 1 / exponent);
   };
 
   function calcResult() {
@@ -85,11 +106,6 @@ const Calculator = () => {
           setDisplayEXP(displayEXP + value);
           setExpression(expression + sciFunc[value]);
         }
-        else if (value === 'x²' || value === 'x³' || value === 'eˣ' || value === '10ˣ') {
-            // Handle unary operations
-            setDisplayEXP(displayEXP + value + '(');
-            setExpression(expression + sciFunc[value] + '(')
-        }
         else {
           setDisplayEXP(displayEXP + value + '(');
           setExpression(expression + sciFunc[value] + '(');
@@ -97,11 +113,6 @@ const Calculator = () => {
       } 
       else if (value === '+/-') {
         handleSignChange();
-      }
-      else if (value === 'x!') {
-        // Handle factorial
-        setDisplayEXP(displayEXP + value + '(');
-        setExpression(expression + sciFunc[value]);
       }
     
     else if (value === 'mc') {
@@ -183,6 +194,11 @@ const Calculator = () => {
 
   return (
     <div className="calculator">
+    <div className="mac-dots">
+          <div className="mac-dot red"></div>
+          <div className="mac-dot orange"></div>
+          <div className="mac-dot green"></div>
+        </div>
       <DisplayWindow expression={displayEXP} result={result} />
       <KeysWindow handleButton={handleButton} />
     </div>
