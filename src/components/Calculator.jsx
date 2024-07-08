@@ -16,8 +16,32 @@ const Calculator = () => {
     log: "Math.log10",
     π: "Math.PI",
     e: "Math.E",
-    "^": "**",
-    "√": "Math.sqrt",
+    "x²": "square",
+    "x³": "cube",
+    "xʸ": "Math.pow",
+    "eˣ": "Math.exp",
+    "10ˣ": "tenExp",
+    "x!": "factorial",
+  };
+
+  const square = (num) => {
+    return num * num;
+  };
+
+  const cube = (num) => {
+    return num * num * num;
+  };
+
+  const tenExp = (num) => {
+    return Math.pow(10, num);
+  };
+
+  const factorial = (num) => {
+    let result = 1;
+    for (let i = 2; i <= num; i++) {
+      result *= i;
+    }
+    return result;
   };
 
   function calcResult() {
@@ -46,17 +70,27 @@ const Calculator = () => {
     }
   };
 
+
   function handleButton(value) {
+
+
     if (value === "C") {
       setExpression("");
       setDisplayEXP("");
       setResult("0");
     } 
+
     else if (sciFunc.hasOwnProperty(value)) {
         if (value === 'π' || value === 'e') {
           setDisplayEXP(displayEXP + value);
           setExpression(expression + sciFunc[value]);
-        } else {
+        }
+        else if (value === 'x²' || value === 'x³' || value === 'eˣ' || value === '10ˣ') {
+            // Handle unary operations
+            setDisplayEXP(displayEXP + value + '(');
+            setExpression(expression + sciFunc[value] + '(')
+        }
+        else {
           setDisplayEXP(displayEXP + value + '(');
           setExpression(expression + sciFunc[value] + '(');
         }
@@ -64,14 +98,12 @@ const Calculator = () => {
       else if (value === '+/-') {
         handleSignChange();
       }
-    else if (value === "!") {
-      const lastNum = extractLastNum(expression);
-      if (lastNum != null) {
-        const num = parseFloat(lastNum);
-        setDisplayEXP(displayEXP + value);
-        setExpression(expression.replace(lastNum, factorial(num)));
+      else if (value === 'x!') {
+        // Handle factorial
+        setDisplayEXP(displayEXP + value + '(');
+        setExpression(expression + sciFunc[value]);
       }
-    } 
+    
     else if (value === 'mc') {
         handleMemoryClear();
       } else if (value === 'mr') {
@@ -148,17 +180,6 @@ const Calculator = () => {
     setExpression("");
     setDisplayEXP("");
   };
-
-  function factorial(n) {
-    let result = 1;
-    for (let i = 1; i <= n; i++) result *= i;
-    return result;
-  }
-
-  function extractLastNum(exp) {
-    const numbers = exp.match(/\d+/g);
-    return numbers ? numbers[numbers.length - 1] : null;
-  }
 
   return (
     <div className="calculator">
