@@ -9,7 +9,7 @@ const Calculator = () => {
   const [result, setResult] = useState("0");
   const [memory, setMemory] = useState(0);
   const [showConfetti, setShowConfetti] = useState(false);
-  const [lastResult, setLastResult] = useState(null);
+  const [history, setHistory] = useState([]);
 
   const sciFunc = {
     "sin": "Math.sin",
@@ -73,10 +73,10 @@ const Calculator = () => {
       try {
         let compute = eval(expression);
         compute = parseFloat(compute.toFixed(4));
+        setHistory([...history, { expression, compute }]);
         setDisplayEXP(compute.toString());
         setExpression(compute.toString());
         setResult(compute);
-        setLastResult(compute);
 
         if (checkForConfetti(expression)) {
             setShowConfetti(true);
@@ -225,7 +225,19 @@ const Calculator = () => {
           <div className="mac-dot orange"></div>
           <div className="mac-dot green"></div>
         </div>
-      <DisplayWindow expression={displayEXP} result={result} />
+        
+      <div className="displayWindow">
+      <div className="history">
+        <h3>Calculation History</h3>
+        <ul>
+          {history.map((item, index) => (
+            <li key={index}>{item.expression} = {item.compute}</li>
+          ))}
+        </ul>
+      </div>
+      <p className="expression">{displayEXP}</p>
+      <p className="result">{result}</p>
+    </div>
       <KeysWindow handleButton={handleButton} />
     </div>
   );
