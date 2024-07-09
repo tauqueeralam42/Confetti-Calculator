@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import DisplayWindow from "./DisplayWindow";
 import KeysWindow from "./KeysWindow";
+import ConfettiExplosion from 'react-confetti-explosion';
 
 const Calculator = () => {
   const [expression, setExpression] = useState("");
   const [displayEXP, setDisplayEXP] = useState("");
   const [result, setResult] = useState("0");
   const [memory, setMemory] = useState(0);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [lastResult, setLastResult] = useState(null);
 
   const sciFunc = {
     "sin": "Math.sin",
@@ -70,7 +73,15 @@ const Calculator = () => {
       try {
         let compute = eval(expression);
         compute = parseFloat(compute.toFixed(4));
+        setDisplayEXP(compute.toString());
+        setExpression(compute.toString());
         setResult(compute);
+        setLastResult(compute);
+
+        if (checkForConfetti(expression)) {
+            setShowConfetti(true);
+            setTimeout(() => setShowConfetti(false), 5000); // Hide confetti after 3 seconds
+          }
       } catch (error) {
         setResult("An Error Occurred!");
       }
@@ -90,6 +101,11 @@ const Calculator = () => {
       }
     }
   };
+  const checkForConfetti = (expression) => {
+    const regex = /(\b2\b|\b6\b)/g;
+    const matches = expression.match(regex);
+    return matches && matches.length >= 2;
+  };
 
 
   function handleButton(value) {
@@ -99,6 +115,8 @@ const Calculator = () => {
       setExpression("");
       setDisplayEXP("");
       setResult("0");
+      setLastResult(null);
+      setShowConfetti(false);
     } 
 
     else if (sciFunc.hasOwnProperty(value)) {
@@ -138,14 +156,18 @@ const Calculator = () => {
         setDisplayEXP(displayEXP + value);
       }
     else {
-      setExpression(expression + value);
-      setDisplayEXP(displayEXP + value);
+        
+            setDisplayEXP(displayEXP + value);
+            setExpression(expression + value);
+          
+    
     }
   }
 
   const handleMemoryClear = () => {
     setMemory(0);
     handleClear();
+
   };
 
   const handleMemoryRecall = () => {
@@ -190,10 +212,14 @@ const Calculator = () => {
   const handleClear = () => {
     setExpression("");
     setDisplayEXP("");
+    setLastResult(null);
+    setShowConfetti(false);
   };
 
   return (
+    
     <div className="calculator">
+    {showConfetti && <ConfettiExplosion />}
     <div className="mac-dots">
           <div className="mac-dot red"></div>
           <div className="mac-dot orange"></div>
