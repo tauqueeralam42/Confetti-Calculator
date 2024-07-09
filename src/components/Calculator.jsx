@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import DisplayWindow from "./DisplayWindow";
 import KeysWindow from "./KeysWindow";
 import ConfettiExplosion from 'react-confetti-explosion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 
 const Calculator = () => {
   const [expression, setExpression] = useState("");
@@ -132,6 +134,11 @@ const Calculator = () => {
       else if (value === '+/-') {
         handleSignChange();
       }
+      // else if (value === '%') {
+      //   const result = parseFloat(expression) / 100;
+      //   setDisplayEXP(displayEXP + value);
+      //   setExpression(expression +  result.toString());
+      // } 
     
     else if (value === 'mc') {
         handleMemoryClear();

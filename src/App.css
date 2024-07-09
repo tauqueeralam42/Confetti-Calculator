@@ -85,6 +85,7 @@ body {
   justify-content: center;
   flex-direction: column;
   gap: 1rem;
+  position: relative;
 }
 
 .calculator {
@@ -234,6 +235,57 @@ body {
 .history::-webkit-scrollbar-thumb:hover {
   background-color: #b3b3b3; /* Scrollbar color on hover */
 }
+
+
+
+.theme-toggle {
+  position: relative;
+  cursor: pointer;
+  width: 60px;
+  height: 30px;
+  background-color: #333;
+  border-radius: 15px;
+  padding: 3px;
+
+}
+
+.theme-toggle .fa-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 6px;
+  color: #fff;
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle .toggle-track {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #f8c940; /* Initial color for day mode */
+  transition: background-color 0.3s ease;
+}
+
+.theme-toggle .toggle-track.day {
+  left: 34px; /* Day mode position */
+}
+
+.theme-toggle .toggle-track.night {
+  left: 4px; /* Night mode position */
+  background-color: #555; /* Color for night mode */
+}
+
+.day-mode .theme-toggle .toggle-track {
+  background-color: #f8c940; /* Day mode color */
+}
+
+.night-mode .theme-toggle .toggle-track {
+  background-color: #555; /* Night mode color */
+}
+
 
 
 @media (max-width: 610px) {
